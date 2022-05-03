@@ -1,5 +1,4 @@
-import React from 'react';
-import UserResults from '../users/UserResults';
+import UserResults from '../components/users/UserResults';
 
 const Home = () => {
   return (
