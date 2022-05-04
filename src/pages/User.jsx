@@ -37,6 +37,9 @@ const User = () => {
   if (loading) {
     return <Spinner />;
   }
+  // NOTE: check for valid url to users website
+
+  const websiteUrl = blog?.startsWith('http') ? blog : 'https://' + blog;
 
   return (
     <>
@@ -93,12 +96,8 @@ const User = () => {
                 <div className='stat'>
                   <div className='stat-title text-md'>Website</div>
                   <div className='text-lg stat-value'>
-                    <a
-                      href={`https://${blog}`}
-                      target='_blank'
-                      rel='noreferrer'
-                    >
-                      {blog}
+                    <a href={websiteUrl} target='_blank' rel='noreferrer'>
+                      {websiteUrl}
                     </a>
                   </div>
                 </div>
@@ -164,6 +163,7 @@ const User = () => {
             </div>
           </div>
         </div>
+
         <RepoList repos={repos} />
       </div>
     </>
