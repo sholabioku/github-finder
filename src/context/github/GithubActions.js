@@ -21,25 +21,15 @@ export const searchUsers = async (text) => {
   return response.data.items;
 };
 
-// Get single user  from GitHub API
-export const getUser = async (login) => {
-  const response = await github.get(`/users/${login}`);
+// Get user and repos from GitHub API
+export const getUserAndRepos = async (login) => {
+  const [user, repos] = await Promise.all([
+    github.get(`/users/${login}`),
+    github.get(`/users/${login}/repos`),
+  ]);
 
-  if (response.status === 404) {
-    window.location = '/notFound';
-  } else {
-    return response.data;
-  }
-};
-
-// Fetch user repos from GitHub API
-export const getUserRepos = async (login) => {
-  const params = new URLSearchParams({
-    sort: 'created',
-    per_pg: 10,
-  });
-
-  const response = await github.get(`/users/${login}/repos?${params}`);
-
-  return response.data;
+  return {
+    user: user.data,
+    repos: repos.data,
+  };
 };
